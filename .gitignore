@@ -1,0 +1,7 @@
+__pycache__/
+.idea/
+logs/
+tmp/
+test.json
+*.egg-info
+*.swp
