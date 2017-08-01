@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import json
 import datetime
 from typing import List, Any
 
@@ -28,13 +29,24 @@ class DateManager(object):
 
 class Validator(object):
 
-    def __init__(self):
+    def __init__(self, contents: str = "photos.photo"):
         self.status_ = "health"
+        self.target_ = contents
 
-    def check(self, subjects: Any) -> object:
-        for subject in subjects:
-            if subject:
-                pass
+    def deploy(self, text: str, format: str):
+        if format == "json":
+            obj = json.loads(text)
+        return obj
+
+    def check(self, response_text: str, format: str = "json") -> bool:
+        subjects = self.deploy(response_text, format)
+        for key in self.target_.split("."):
+            if key in subjects:
+                subjects = subjects[key]
+                if not subjects:
+                    raise ValueError("target contents is empty")
+                else:
+                    continue
             else:
-                pass
-        return self
+                raise ValueError("target contents key is not exist")
+        return True

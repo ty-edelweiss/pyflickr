@@ -1,11 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import sys
 import queue
-import signal
 import logging
-import threading
 from pyflickr.core import oauth
 from pyflickr.core.mapper import FileAppender
 from pyflickr.core.request import Accessor
@@ -14,14 +11,6 @@ from pyflickr.core.manager import DateManager, Validator
 VENDOR = "flickr"
 CLASS = "photos"
 METHOD = "search"
-
-logger = logging.getLogger(__name__)
-notice = threading.Event()
-
-def signalHandler(signal, frame):
-    notice.set()
-    logger.info("terminate crawling application.")
-    sys.exit(1)
 
 if __name__ == "__main__":
 
@@ -47,14 +36,17 @@ if __name__ == "__main__":
 
     queue = queue.Queue()
 
-    signal.signal(signal.SIGINT, signalHandler)
-
     for min_date, max_date in date_manager:
         payload["min_taken_date"] = min_date
         payload["max_taken_date"] = max_date
+        notice = True
         accessor = Accessor(queue, notice, payload, token)
         appender = FileAppender(queue, notice, "data/" + min_date.split(" ")[0] + ".json")
         accessor.start()
+        print("accessor")
         appender.start()
+        print("appender")
         accessor.join()
+        print("accessor")
         appender.join()
+        print("appender")
