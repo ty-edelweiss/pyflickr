@@ -15,3 +15,13 @@ bin/crawl -s {start date} -e {end date}
 bin/crawl -t -s {start datetime} -e {end datetime}
 ```
 
+#### Comannd line options
+
+Usage: bin/crawl [options]
+
+Options:
+* -h, --help            show this help message and exit
+* -s START, --start=START
+                        collecting start date. mysql format date.
+* -e END, --end=END     collecting end date. mysql format date.
+* -t, --time            changing input date is mysql format datetime.
