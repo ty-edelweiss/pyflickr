@@ -11,7 +11,7 @@ this application is able to used for command line application tool.
 bin/crawl -s {start date} -e {end date}
 
 
-# (Example) bin/crawl -s 20xx-xx-xx hh:mm:ss -e 20yy-yy-yy hh:mm:ss
-bin/crawl -s {start datetime} -e {end datetime}
+# (Example) bin/crawl -t -s 20xx-xx-xx hh:mm:ss -e 20yy-yy-yy hh:mm:ss
+bin/crawl -t -s {start datetime} -e {end datetime}
 ```
 
