@@ -44,6 +44,14 @@ parser.add_option(
     dest="time"
 )
 
+parser.add_option(
+    "-n", "--no-limit",
+    action="store_true",
+    default=False,
+    help="crawling no limit mode.",
+    dest="limit"
+)
+
 
 def signalHandler(signal, frame):
     notice.set()
