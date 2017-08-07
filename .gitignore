@@ -1,9 +1,10 @@
 __pycache__/
 .idea/
-data/
-logs/
-tmp/*.xml
+data/*
+logs/*
+tmp/*
 config/*.conf
 test.json
 *.egg-info
 *.swp
+!.gitkeep
