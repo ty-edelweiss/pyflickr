@@ -1,5 +1,6 @@
-2017-08-07 17:03:16,305 INFO pyflickr.core.mapper: Append success to /Users/yuusakutakano/Lab/Research/Python/pyflickr/data/2016-01-01.json
-2017-08-07 17:03:18,629 INFO pyflickr.core.request: Access success to https://api.flickr.com/services/rest/ at 5
-2017-08-07 17:03:18,633 INFO pyflickr.core.mapper: Append success to /Users/yuusakutakano/Lab/Research/Python/pyflickr/data/2016-01-01.json
-2017-08-07 17:03:20,702 INFO pyflickr.core.request: Access success to https://api.flickr.com/services/rest/ at 6
-2017-08-07 17:03:20,706 INFO pyflickr.core.mapper: Append success to /Users/yuusakutakano/Lab/Research/Python/pyflickr/data/2016-01-01.json
+2017-08-07 17:04:20,332 INFO pyflickr.core.mapper: Append success to /Users/yuusakutakano/Lab/Research/Python/pyflickr/data/2016-01-02.json
+2017-08-07 17:04:22,273 INFO pyflickr.core.request: Access success to https://api.flickr.com/services/rest/ at 17
+2017-08-07 17:04:22,276 INFO pyflickr.core.mapper: Append success to /Users/yuusakutakano/Lab/Research/Python/pyflickr/data/2016-01-02.json
+2017-08-07 17:04:23,766 INFO pyflickr.core.request: target contents is empty
+2017-08-07 17:04:24,771 INFO pyflickr.core.request: Api accessor shutdown
+2017-08-07 17:04:25,281 INFO pyflickr.core.mapper: File appender shutdown
