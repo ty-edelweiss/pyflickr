@@ -10,6 +10,7 @@ from typing import Dict, Any
 
 __cwd__ = os.getcwd()
 
+
 class FileAppender(threading.Thread):
 
     def __init__(self, cache: queue.Queue, notice: threading.Event, path: str):
@@ -30,10 +31,13 @@ class FileAppender(threading.Thread):
         self.logger_.info("File appender running ... ")
         while self.running_:
             if not self.notice_.is_set():
-                data = self.cache_.get()
-                with open(self.path_, "a") as f:
-                    f.write(data)
-                self.logger_.info(f"Append success to {self.path_}")
+                try:
+                    data = self.cache_.get(block=True, timeout=3)
+                    with open(self.path_, "a") as f:
+                        f.write(data)
+                    self.logger_.info(f"Append success to {self.path_}")
+                except queue.Empty as err:
+                    pass
             else:
                 break
 
@@ -62,10 +66,12 @@ class DatabaseAppender(object):
         self.logger_.info("Database appender running ... ")
         while self.running_:
             if not self.notice_.is_set():
-                data = self.cache_.get()
                 try:
-                    cursor.execute("")
+                    data = self.cache_.get(block=True, timeout=3)
+                    cursor.execute("INSERT ON VALUES ")
                     self.connection_.commit()
+                except queue.Empty as err:
+                    pass
                 except psycopg2.ProgrammingError as err:
                     self.connection_.rollback()
                     self.logger_.error(err)

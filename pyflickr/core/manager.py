@@ -33,7 +33,12 @@ class Validator(object):
         self.status_ = "health"
         self.target_ = contents
 
-    def deploy(self, text: str, format: str):
+    def reset(self):
+        self.status_ = "health"
+        return self
+
+    def deploy(self, text: str, format: str) -> object:
+        obj = None
         if format == "json":
             obj = json.loads(text)
         return obj
@@ -44,9 +49,11 @@ class Validator(object):
             if key in subjects:
                 subjects = subjects[key]
                 if not subjects:
+                    self.status_ = "unhealth"
                     raise ValueError("target contents is empty")
                 else:
                     continue
             else:
+                self.status_ = "unhealth"
                 raise ValueError("target contents key is not exist")
         return True

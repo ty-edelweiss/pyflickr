@@ -10,6 +10,7 @@ from requests_oauthlib import OAuth1
 from xml.dom import minidom
 from xml.etree import ElementTree
 from typing import Dict, Tuple, Any
+
 from ..util.utils import xmlToTreeDict, treeDictToXml
 
 __cwd__ = os.getcwd()
@@ -47,8 +48,9 @@ def oauth_request(api_key: str, api_secret: str) -> Dict[str, Any]:
     logger.info(f"Success get to access token on this crawling application by {access_token_url}")
     return access_token
 
+
 def oauth_validator() -> Tuple[str, str, Dict[str, Any]]:
-    config_path = __cwd__ + "/conf/api.xml"
+    config_path = __cwd__ + "/config/api.xml"
     if os.path.isfile(config_path):
         tree = ElementTree.parse(config_path)
         config = xmlToTreeDict(tree.getroot())
@@ -61,9 +63,10 @@ def oauth_validator() -> Tuple[str, str, Dict[str, Any]]:
         raise ValueError("api cofiguration file is not exist")
     return api_key, api_secret, config
 
+
 def auth() -> object:
     api_key, api_secret, config = oauth_validator()
-    api_path = __cwd__ + "/tmp/"  + api_key + ".xml"
+    api_path = __cwd__ + "/tmp/" + api_key + ".xml"
     if os.path.isfile(api_path):
         tree = ElementTree.parse(api_path)
         api_config = xmlToTreeDict(tree.getroot())

@@ -7,7 +7,7 @@ import signal
 import logging
 import threading
 from pyflickr.core import oauth
-from pyflickr.core.mapper import FileAppender
+from pyflickr.core.mapper import FileAppender, DatabaseAppender
 from pyflickr.core.request import Accessor
 from pyflickr.core.manager import DateManager, Validator
 
@@ -17,6 +17,7 @@ METHOD = "search"
 
 logger = logging.getLogger(__name__)
 notice = threading.Event()
+
 
 def signalHandler(signal, frame):
     notice.set()
@@ -35,6 +36,7 @@ if __name__ == "__main__":
         "method": api,
         "format": "json",
         "nojsoncallback": 1,
+        "place_id": "W3QedCZTUb5Ez.rF.Q",
         "extras": "description, license, date_upload, date_taken"\
                   "owner_name, icon_server, original_format, last_update"\
                   "geo, tags, machine_tags, o_dims"\
@@ -50,11 +52,12 @@ if __name__ == "__main__":
     signal.signal(signal.SIGINT, signalHandler)
 
     for min_date, max_date in date_manager:
-        payload["min_taken_date"] = min_date
-        payload["max_taken_date"] = max_date
-        accessor = Accessor(queue, notice, payload, token)
+        payload["min_upload_date"] = min_date
+        payload["max_upload_date"] = max_date
+        accessor = Accessor([ queue ], notice, payload, token)
         appender = FileAppender(queue, notice, "data/" + min_date.split(" ")[0] + ".json")
         accessor.start()
         appender.start()
         accessor.join()
         appender.join()
+        notice.clear()
