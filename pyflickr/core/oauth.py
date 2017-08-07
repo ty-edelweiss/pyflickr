@@ -17,7 +17,7 @@ __cwd__ = os.getcwd()
 
 logger = logging.getLogger(__name__)
 
-configure = {
+vendor_config = {
     "REQUEST_URL": "https://www.flickr.com/services/oauth/request_token",
     "AUTHORIZE_URL": "https://www.flickr.com/services/oauth/authorize",
     "ACCESS_TOKEN_URL": "https://www.flickr.com/services/oauth/access_token",
@@ -26,9 +26,9 @@ configure = {
 
 
 def oauth_request(api_key: str, api_secret: str) -> Dict[str, Any]:
-    logger.info(f"Success loading the authentication of flickr configure.")
-    request_url, authorize_url, access_token_url = configure["REQUEST_URL"], configure["AUTHORIZE_URL"], configure["ACCESS_TOKEN_URL"]
-    callback_uri = configure["CALLBACK_URI"]
+    logger.info(f"Success loading the authentication of flickr vendor_config.")
+    request_url, authorize_url, access_token_url = vendor_config["REQUEST_URL"], vendor_config["AUTHORIZE_URL"], vendor_config["ACCESS_TOKEN_URL"]
+    callback_uri = vendor_config["CALLBACK_URI"]
     auth = OAuth1(api_key, api_secret, callback_uri=callback_uri)
     response = requests.post(request_url, auth=auth)
     request_token = dict(urllib.parse.parse_qsl(response.text))
@@ -50,18 +50,25 @@ def oauth_request(api_key: str, api_secret: str) -> Dict[str, Any]:
 
 
 def oauth_validator() -> Tuple[str, str, Dict[str, Any]]:
-    config_path = __cwd__ + "/config/api.xml"
+    config_path = __cwd__ + "/config/application.conf"
     if os.path.isfile(config_path):
-        tree = ElementTree.parse(config_path)
-        config = xmlToTreeDict(tree.getroot())
-        if config["api"]["@key"] and config["api"]["@secret"]:
-            api_key = config["api"]["@key"]
-            api_secret = config["api"]["@secret"]
-        else:
+        with open(config_path, "r") as fp:
+            lines = fp.readlines()
+            consumer_key, consumer_secret = tuple([line.strip().split("=")[1] for line in lines if "=" in line])
+        config = {
+            "api": {
+                "@secret": consumer_secret,
+                "token": {
+                    "text": None,
+                    "@secret": None
+                }
+            }
+        }
+        if not consumer_key and not consumer_secret:
             raise ValueError("api cofiguration is invalid")
     else:
         raise ValueError("api cofiguration file is not exist")
-    return api_key, api_secret, config
+    return consumer_key, consumer_secret, config
 
 
 def auth() -> object:

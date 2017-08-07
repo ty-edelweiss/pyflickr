@@ -1,0 +1,8 @@
+# Your crawling application's configure,
+# your original setting use oauth authentication.
+
+# flickr's consumer key
+CONSUMER_KEY=
+
+# flickr's consumer secret
+CONSUMER_SECRET=
