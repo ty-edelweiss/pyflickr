@@ -1,2 +1,5 @@
-2017-08-07 15:37:51,545 INFO pyflickr.core.request: Access success to https://api.flickr.com/services/rest/ at 412
-2017-08-07 15:37:51,549 INFO pyflickr.core.mapper: Append success to /Users/yuusakutakano/Lab/Research/Python/pyflickr/data/2016-01-06.json
+2017-08-07 15:41:02,707 INFO pyflickr.core.mapper: Append success to /Users/yuusakutakano/Lab/Research/Python/pyflickr/data/2016-01-06.json
+2017-08-07 15:41:04,851 INFO pyflickr.core.request: Access success to https://api.flickr.com/services/rest/ at 507
+2017-08-07 15:41:04,854 INFO pyflickr.core.mapper: Append success to /Users/yuusakutakano/Lab/Research/Python/pyflickr/data/2016-01-06.json
+2017-08-07 15:41:06,819 INFO pyflickr.core.request: Access success to https://api.flickr.com/services/rest/ at 508
+2017-08-07 15:41:06,823 INFO pyflickr.core.mapper: Append success to /Users/yuusakutakano/Lab/Research/Python/pyflickr/data/2016-01-06.json
